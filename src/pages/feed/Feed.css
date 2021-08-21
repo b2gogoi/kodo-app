@@ -1,0 +1,32 @@
+* {
+    background-color: bisque;
+}
+
+.feed-grid-container {
+    width: calc(100vw - 10px);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.feed-grid-container > * {
+    flex-basis: 33%;
+}
+
+@media screen and (max-width: 600px) {
+    .feed-grid-container > * {
+        flex-basis: 100%;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .feed-grid-container > * {
+        flex-basis: 50%;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .feed-grid-container > * {
+        flex-basis: 33%;
+    }
+}
