@@ -5,6 +5,14 @@ import SortBy from "../../components/sortBy/SortBy";
 
 import './Feed.css';
 
+const sortOptions = ['name', 'lastEdit'];
+
+const defaultSort = sortOptions[0];
+
+const changeSort = (sortBy) => {
+  console.log('sortBy', sortBy);
+}
+
 export default function Feed() {
     const feeds = [{
         "name": "Customer Assurance Liaison",
@@ -46,11 +54,11 @@ export default function Feed() {
         <h1>Feed</h1>
         <div className="filter-box">
             <SearchBar />
-            <SortBy />
+            <SortBy options={sortOptions} selected={defaultSort} onSelect={changeSort} />
         </div>
 
         <div className="feed-grid-container">
-            {feeds.length > 0 && feeds.map(feed => <FeedCard feed={feed} />)}
+            {feeds.length > 0 && feeds.map(feed => <FeedCard key={feed.name} feed={feed} />)}
         </div>
 
         <div className="feed-table-container">
