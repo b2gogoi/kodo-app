@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import FeedCard from "../../components/feedCard/FeedCard";
 import SearchBar from "../../components/searchBar/SearchBar";
 import SortBy from "../../components/sortBy/SortBy";
+import Table from "../../components/table/Table";
 
 import './Feed.css';
 
-const sortOptions = ['name', 'lastEdit'];
 
+const columnSequence = ['name', 'dateLastEdited'/* , 'description' */];
+const sortOptions = ['name', 'dateLastEdited'];
 const defaultSort = sortOptions[0];
 
-const changeSort = (sortBy) => {
-  console.log('sortBy', sortBy);
-}
+
 
 export default function Feed() {
+    const [sortCol, setSortCol] = useState(defaultSort);
+    const changeSort = (sortBy) => {
+      console.log('sortBy', sortBy);
+      setSortCol(sortBy);
+    }
     const feeds = [{
         "name": "Customer Assurance Liaison",
         "image": "http://lorempixel.com/640/480",
@@ -54,15 +59,15 @@ export default function Feed() {
         <h1>Feed</h1>
         <div className="filter-box">
             <SearchBar />
-            <SortBy options={sortOptions} selected={defaultSort} onSelect={changeSort} />
+            <SortBy options={sortOptions} selected={sortCol} onSelect={changeSort} />
         </div>
 
-        <div className="feed-grid-container">
+        {/* <div className="feed-grid-container">
             {feeds.length > 0 && feeds.map(feed => <FeedCard key={feed.name} feed={feed} />)}
-        </div>
+        </div> */}
 
         <div className="feed-table-container">
-
+          <Table colOrderSeq={columnSequence} data={feeds} sortCol={sortCol}/>
         </div>
     </>);
 }

@@ -1,0 +1,13 @@
+.table-container {
+    background-color: white;
+}
+
+.table-headers-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-row {
+    display: flex;
+    justify-content: space-between;
+}
