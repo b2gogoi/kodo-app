@@ -36,7 +36,7 @@ export default function Feed() {
       setFilteredFeed(filtered || []);
     }, [searchText, setFilteredFeed, sortCol]);
 
-    return (<>
+    return (<div className="page-container">
         <h1>Feed</h1>
         <div className="filter-box">
             <SearchBar filter={search} text={searchText} />
@@ -50,5 +50,5 @@ export default function Feed() {
         <div className="feed-table-container">
           <Table colOrderSeq={columnSequence} data={filteredFeed} />
         </div>
-    </>);
+    </div>);
 }
