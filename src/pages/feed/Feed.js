@@ -3,7 +3,7 @@ import FeedCard from "../../components/feedCard/FeedCard";
 import SearchBar from "../../components/searchBar/SearchBar";
 import SortBy from "../../components/sortBy/SortBy";
 import Table from "../../components/table/Table";
-import { sortByCol } from '../../utils/utils';
+import { sortByCol, searchOn } from '../../utils/utils';
 import { feeds } from '../../utils/data';
 
 import './Feed.css';
@@ -28,8 +28,12 @@ export default function Feed() {
     }
     
     useEffect(() => {
-      const filtered = searchText ? feeds.filter(feed => feed.name.toLowerCase().includes(searchText.toLowerCase())) : feeds;
-      setFilteredFeed(sortByCol(filtered, sortCol));
+      let filtered = searchText ? searchOn(searchText, feeds) : feeds;
+      
+      if (filtered) {
+        filtered = sortByCol(filtered, sortCol);
+      }
+      setFilteredFeed(filtered || []);
     }, [searchText, setFilteredFeed, sortCol]);
 
     return (<>

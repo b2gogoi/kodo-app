@@ -21,3 +21,21 @@ export const sortByCol = (data, column) => {
     }
     return sorted;
 }
+
+export const searchOn = (searchText, data) => {
+    
+    if (searchText.startsWith('"') && searchText.endsWith('"')) {
+        const exactSearchTerm = searchText.substring(1, searchText.length - 1).toLowerCase();
+        return data.filter(feed => feed.name.toLowerCase().includes(exactSearchTerm)
+            || feed.description.toLowerCase().includes(exactSearchTerm));
+    } else {
+        let expStr = searchText.split(' ').reduce((acc, word) => {
+            acc += `(?=.*\\b${word}\\b)`;
+            return acc;
+        }, '');
+
+        const regex = new RegExp(expStr, 'i');
+        return data.filter(feed => regex.test(feed.name) || regex.test(feed.description));
+    }
+    
+}
