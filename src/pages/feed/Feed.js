@@ -52,7 +52,7 @@ export default function Feed() {
           }
         }
 
-        if (filtrMap['search'] && decodeURI(filtrMap['search']) !== searchText) {
+        if (filtrMap['search'] && filtrMap['search'] !== searchText) {
           const searchQuery = filtrMap['search'];
           search(searchQuery);
         }

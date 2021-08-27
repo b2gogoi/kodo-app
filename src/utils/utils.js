@@ -44,7 +44,7 @@ export const parseQueryString = (query) => {
     const filters = query.substring(1).split('&');
     return filters.reduce((acc, filter) => {
         const [key, value] = filter.split('=');
-        acc[key] = value;
+        acc[key] = decodeURI(value);
         return acc;
     }, {});
 }
@@ -57,11 +57,11 @@ export const parseQueryString = (query) => {
  */
 export const genQueryString = (filters) => {
     const first = filters.pop();
-    let query = `?${first.key}=${encodeURIComponent(first.value)}`;
+    let query = `?${first.key}=${encodeURI(first.value)}`;
 
     for(let i = 0; i < filters.length; i++) {
         const { key, value } = filters[i];
-        query += `&${key}=${encodeURIComponent(value)}`;
+        query += `&${key}=${encodeURI(value)}`;
     }
 
     return query;
