@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import './SearchBar.css';
 
 export default function SearchBar({filter, text}: props) {
     const [search, setSearch] = useState(text);
@@ -6,8 +7,11 @@ export default function SearchBar({filter, text}: props) {
     useEffect(() => {
         setSearch(text);
     }, [text])
-    return (<input type="text" value={search} onChange={(e) => {
-        setSearch(e.target.value);
-        filter(e.target.value);
-    }} />);
+    return (<form className="search-box">
+        <input type="search" value={search} placeholder="Search in name or description" onChange={(e) => {
+            setSearch(e.target.value);
+            filter(e.target.value);
+        }} />
+        <div className="search-icon"></div>
+    </form>);
 }

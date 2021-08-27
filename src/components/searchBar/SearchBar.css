@@ -1,0 +1,30 @@
+.search-box {
+    border-radius: 8px;
+    width: 60vw;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    box-shadow: 0px 0px 10px gainsboro;
+    position: relative;
+}
+
+.search-box > input[type=search] {
+    min-width: 60px;
+    padding: 6px 12px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+}
+.search-box > input[type=search]:focus {
+    outline-width: 0;
+}
+
+.search-icon {
+    background: #fff url(http://localhost:3000/images/search.svg) 0 0 no-repeat;
+    height: 4px;
+    padding: 10px;
+    position: relative;
+    right: 8px;
+    top: 4px;
+}

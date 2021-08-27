@@ -39,3 +39,30 @@ export const searchOn = (searchText, data) => {
     }
     
 }
+
+export const parseQueryString = (query) => {
+    const filters = query.substring(1).split('&');
+    return filters.reduce((acc, filter) => {
+        const [key, value] = filter.split('=');
+        acc[key] = value;
+        return acc;
+    }, {});
+}
+
+/*
+    example: [
+        { key: 'sortBy', value: 'name'},
+        {key: 'search', value: 'Hello']
+    ]
+ */
+export const genQueryString = (filters) => {
+    const first = filters.pop();
+    let query = `?${first.key}=${encodeURIComponent(first.value)}`;
+
+    for(let i = 0; i < filters.length; i++) {
+        const { key, value } = filters[i];
+        query += `&${key}=${encodeURIComponent(value)}`;
+    }
+
+    return query;
+}
