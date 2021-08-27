@@ -5,9 +5,95 @@
 .table-headers-row {
     display: flex;
     justify-content: space-between;
+    text-transform: capitalize;
+    box-shadow: 0px 0px 10px gainsboro;
+    border-bottom: 1px solid gainsboro;
 }
 
 .table-row {
     display: flex;
     justify-content: space-between;
+}
+
+.table-headers-row > * {
+    font-size: small;
+    font-weight: 500;
+    text-align: start;
+    padding: 4px;
+}
+
+.table-headers-row > .sorted {
+    font-weight: 800;
+}
+
+.table-body-container {
+    padding: 10px 0;
+}
+.table-body-container > .table-row {
+    margin: 4px;
+}
+
+.table-body-container > .table-row > .column-dateLastEdited {
+    text-align: end;
+    font-size: small;
+}
+
+.table-body-container > .table-row > [class*="column"] {
+    font-size: small;
+    padding: 0 10px;
+}
+
+[class*="column"] > img {
+    width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+    .column-description, .column-image {
+        display: none;
+    }
+
+    .table-headers-row > .column-name, .table-body-container > .table-row > .column-name {
+        flex-basis: 75%;
+    }
+
+    .table-headers-row > .column-dateLastEdited, .table-body-container > .table-row > .column-dateLastEdited  {
+        flex-basis: 25%;
+    }
+}
+
+@media screen and (max-width: 900px) and (min-width: 600px)  {
+    .column-description {
+        display: none;
+    }
+
+    .table-headers-row > .column-name, .table-body-container > .table-row > .column-name {
+        flex-basis: 50%;
+    }
+
+    .table-headers-row > .column-dateLastEdited, .table-body-container > .table-row > .column-dateLastEdited  {
+        flex-basis: 20%;
+    }
+
+    .table-headers-row > .column-image, .table-body-container > .table-row > .column-image  {
+        flex-basis: 10%;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    
+    .table-headers-row > .column-name, .table-body-container > .table-row > .column-name {
+        flex-basis: 20%;
+    }
+
+    .table-headers-row > .column-dateLastEdited, .table-body-container > .table-row > .column-dateLastEdited  {
+        flex-basis: 10%;
+    }
+
+    .table-headers-row > .column-image, .table-body-container > .table-row > .column-image  {
+        flex-basis: 10%;
+    }
+
+    .table-headers-row > .column-description, .table-body-container > .table-row > .column-description  {
+        flex-basis: 60%;
+    }
 }

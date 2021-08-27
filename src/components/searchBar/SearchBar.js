@@ -5,7 +5,7 @@ export default function SearchBar({filter, text}: props) {
     const [search, setSearch] = useState(text);
 
     useEffect(() => {
-        setSearch(text);
+        setSearch(text.trim());
     }, [text])
     return (<form className="search-box">
         <input type="search" value={search} placeholder="Search in name or description" onChange={(e) => {

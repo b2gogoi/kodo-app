@@ -15,9 +15,36 @@
     width: 100%;
     border: none;
     border-radius: 8px;
+    font-size: medium;
+    font-weight: 600;
 }
 .search-box > input[type=search]:focus {
     outline-width: 0;
+}
+
+.search-box > input[type=search]::-webkit-input-placeholder {
+    color: rgb(181, 178, 179);
+    font-style: italic;
+    font-weight: 300;
+    font-size: small;
+}
+.search-box > input[type=search]::-moz-placeholder {
+    color: rgb(181, 178, 179);
+    font-style: italic;
+    font-weight: 300;
+    font-size: small;
+}
+.search-box > input[type=search]:-ms-input-placeholder {
+    color: rgb(181, 178, 179);
+    font-style: italic;
+    font-weight: 300;
+    font-size: small;
+}
+.search-box > input[type=search]:-moz-placeholder {
+    color: rgb(181, 178, 179);
+    font-style: italic;
+    font-weight: 300;
+    font-size: small;
 }
 
 .search-icon {

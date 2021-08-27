@@ -6,6 +6,7 @@ body {
 .page-container {
     width: calc(100vw - 20px);
     padding: 10px;
+    min-height: calc(100vh - 20px);
 }
 
 .feed-grid-container {
@@ -19,6 +20,31 @@ body {
 .filter-box {
     display: flex;
     justify-content: space-between;
+    margin: 10px 0;
+}
+
+.results-container {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 140px);
+}
+
+.message-info {
+    text-align: center;
+    font-size: larger;
+    font-weight: bold;
+    min-height: calc(100vh - 140px);
+    display: flex;
+    flex-direction: column;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.results-info {
+    text-align: start;
+    font-size: small;
+    font-weight:normal;
+    font-style: italic;
     margin: 10px 0;
 }
 
