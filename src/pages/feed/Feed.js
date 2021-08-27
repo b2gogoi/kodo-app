@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useHistory } from "react-router";
 import FeedCard from "../../components/feedCard/FeedCard";
 import SearchBar from "../../components/searchBar/SearchBar";
@@ -20,44 +20,48 @@ export default function Feed() {
     const [searchText, setSearchText] = useState('');
     const [filteredFeed, setFilteredFeed] = useState([]);
 
-    const changeSort = (sortBy) => {
-      setSortCol(sortBy);
-      setFilteredFeed(sortByCol(filteredFeed, sortBy));
-      const currentFilters = [{ key: 'sortBy', value: sortBy}];
+    const changeSort = useCallback((sortBy) => {
+      if (sortBy !== sortCol) {
+        setSortCol(sortBy);
+        setFilteredFeed(sortByCol(filteredFeed, sortBy));
+        const currentFilters = [{ key: 'sortBy', value: sortBy}];
 
-      if (searchText) {
-        currentFilters.push({ key: 'search', value: searchText});
+        if (searchText) {
+          currentFilters.push({ key: 'search', value: searchText});
+        }
+        history.push(genQueryString(currentFilters));
       }
-      history.push(genQueryString(currentFilters));
-    }
+    });
 
-    const search = (text) => {
-      setSearchText(text);
-      const currentFilters = [{ key: 'search', value: text}];
+    const search = useCallback((text) => {
+      if (text !== searchText) {
+        setSearchText(text);
+        const currentFilters = [{ key: 'search', value: text}];
 
-      if (sortCol) {
-        currentFilters.push({ key: 'sortBy', value: sortCol});
+        if (sortCol) {
+          currentFilters.push({ key: 'sortBy', value: sortCol});
+        }
+        history.push(genQueryString(currentFilters));
       }
-      history.push(genQueryString(currentFilters));
-    }
+    });
 
     useEffect(() => {
       if (location.search) {
         const filtrMap = parseQueryString(location.search);
       
-        if (filtrMap['sortBy'] && filtrMap['sortBy'] !== sortCol) {
+        if (filtrMap['sortBy']) {
           const sortBy = filtrMap['sortBy'];
           if (sortOptions.includes(sortBy)) {
             changeSort(sortBy);
           }
         }
 
-        if (filtrMap['search'] && filtrMap['search'] !== searchText) {
+        if (filtrMap['search']) {
           const searchQuery = filtrMap['search'];
           search(searchQuery);
         }
       }
-    }, [location, changeSort, search]);
+    }, [location.search, changeSort, search]);
     
     useEffect(() => {
       let filtered = searchText ? searchOn(searchText, feeds) : feeds;
