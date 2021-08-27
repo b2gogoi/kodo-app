@@ -9,7 +9,7 @@ import { feeds } from '../../utils/data';
 
 import './Feed.css';
 
-const columnSequence = ['name', 'dateLastEdited'/* , 'description' */];
+const columnSequence = ['name', 'dateLastEdited', 'image', 'description'];
 const sortOptions = ['name', 'dateLastEdited'];
 const defaultSort = sortOptions[0];
 
@@ -57,7 +57,7 @@ export default function Feed() {
           search(searchQuery);
         }
       }
-    }, [location]);
+    }, [location, changeSort, search]);
     
     useEffect(() => {
       let filtered = searchText ? searchOn(searchText, feeds) : feeds;
@@ -69,18 +69,21 @@ export default function Feed() {
     }, [searchText, setFilteredFeed, sortCol]);
 
     return (<div className="page-container">
-        <h1>Feed</h1>
+        <h1>Feeds</h1>
         <div className="filter-box">
             <SearchBar filter={search} text={searchText} />
             <SortBy options={sortOptions} selected={sortCol} onSelect={changeSort} />
         </div>
+        <div className="results-container">
+        {filteredFeed.length > 0 && <div className="results-info">{filteredFeed.length} feeds found</div>}
+          <div className="feed-grid-container">
+              {filteredFeed.length > 0 && filteredFeed.map(feed => <FeedCard key={feed.name} feed={feed} />)}
+          </div>
 
-        <div className="feed-grid-container">
-            {filteredFeed.length > 0 && filteredFeed.map(feed => <FeedCard key={feed.name} feed={feed} />)}
-        </div>
-
-        <div className="feed-table-container">
-          <Table colOrderSeq={columnSequence} data={filteredFeed} />
+          {filteredFeed.length > 0 && <div className="feed-table-container">
+            <Table colOrderSeq={columnSequence} data={filteredFeed} sortCol={sortCol} />
+          </div>}
+          {filteredFeed.length === 0 && <div className="message-info">No feeds found for the search conditions</div>}
         </div>
     </div>);
 }
