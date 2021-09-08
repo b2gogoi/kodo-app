@@ -9,6 +9,7 @@ export default function Pagination({items, sizes, selectedSize, options, callbac
     const [pageNum, setPageNum] = useState(1);
     const [pages, setPages] = useState([]);
 
+    const { matches } = window.matchMedia('(max-width: 600px)');
     const availablePageSizes = sizes || PAGE_SIZES;
 
     if ((selectedSize && sizes) && !sizes.includes(selectedSize)) {
@@ -17,25 +18,31 @@ export default function Pagination({items, sizes, selectedSize, options, callbac
 
     const pageData = (pageNumber, pageSize, total) => {
         let start = (pageNumber - 1) * pageSize;
-        console.log(`Page start: ${start}`);
         let end = Number(start) + Number(pageSize);
-        console.log(`Page end: ${end}`);
         if (pageNumber > (total / pageSize)) {
             //lastpage
             end = total;
-            console.log(`lastpage end: ${end}`);
         }
         setPageNum(pageNumber);
         callback(items.slice(start, end));
     }
 
     const resize = (size) => {
-        console.log(`Page size changed to: ${size}`);
         setPageSize(size);
         setPageNum(1);
         pageData(1, size, items.length);
         
     }
+
+    const next = (e) => {
+        pageData(pageNum + 1, pageSize, items.length)
+    }
+
+    const prev = (e) => {
+        pageData(pageNum - 1, pageSize, items.length)
+    }
+
+    let buffer = matches ? 4 : 10;
 
     useEffect(() => {
         let n = Math.ceil(items.length / pageSize);
@@ -46,15 +53,23 @@ export default function Pagination({items, sizes, selectedSize, options, callbac
         setPages(pageNumbers);
     }, [pageSize, items]);
 
-
     return (<div className="pagination-container">
-        <div>
+        {Number(pageSize) !== -1 && <div>
             <div className="pagination-pages">
-                {pages && pages.map(pg => <button className={pg === pageNum ? 'pagination-btn current' : 'pagination-btn'} key={pg} 
+                {pageNum > 1 && buffer < pages.length && <button className="pagination-btn prev-icon" onClick={prev}/>}
+                {pages && pages.filter(pg => {
+                    if (pg > pageNum) {
+                        return pg < (buffer + 1);
+                    } else {
+                        let res = pageNum - pg;
+                        return res < buffer;
+                    }
+                }).map(pg => <button className={pg === pageNum ? 'pagination-btn current' : 'pagination-btn'} key={pg}
                     onClick={e => pageData(pg, pageSize, items.length)}>{pg}</button >)}
+                {(pageNum < pages.length && buffer < pages.length) && <button className="pagination-btn next-icon" onClick={next}/>}
             </div>
-            {Number(pageSize) !== -1 && <p className="pagination-current">Showing from {(pageNum - 1) * pageSize + 1} to {(pageNum > (items.length / pageSize)) ? items.length : (pageNum - 1) * Number(pageSize) + Number(pageSize)}</p>}
-        </div>
+            <p className="pagination-current">Showing from {(pageNum - 1) * pageSize + 1} to {(pageNum > (items.length / pageSize)) ? items.length : (pageNum - 1) * Number(pageSize) + Number(pageSize)}</p>
+        </div>}
         <select className="pagination-size-selector" onChange={(event) => resize(event.target.value)} value={pageSize}>
             {availablePageSizes.map((size) => <option key={size} value={size}>{size === -1 ? 'All' : size}</option>)}
         </select>

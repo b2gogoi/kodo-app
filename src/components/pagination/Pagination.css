@@ -55,3 +55,23 @@
 .pagination-size-selector:focus {
     outline: none;
 }
+
+.prev-icon {
+    background: #fff url(http://localhost:3000/images/left_previous.svg) center/50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    color: salmon;
+}
+
+[class*="icon"].pagination-btn:hover {
+    background-color: #fff;
+}
+
+.next-icon {
+    background: #fff url(http://localhost:3000/images/next_right.svg) center/50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    color: salmon;
+}
