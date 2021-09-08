@@ -4,7 +4,7 @@ import './Pagination.css';
 const PAGE_SIZES = [5,10,15,25,-1];
 const DEFAULT_SIZE = PAGE_SIZES[0];
 
-export default function Pagination({items, sizes, selectedSize, options, callback}) {
+export default function Pagination({items, sizes, selectedSize, callback}) {
     const [pageSize, setPageSize] = useState(selectedSize || DEFAULT_SIZE);
     const [pageNum, setPageNum] = useState(1);
     const [pages, setPages] = useState([]);
@@ -51,7 +51,7 @@ export default function Pagination({items, sizes, selectedSize, options, callbac
             pageNumbers.push(i);
         }
         setPages(pageNumbers);
-    }, [pageSize, items]);
+    }, [pageSize, items.length]);
 
     return (<div className="pagination-container">
         {Number(pageSize) !== -1 && <div>

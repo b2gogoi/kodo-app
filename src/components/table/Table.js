@@ -9,7 +9,8 @@ export default function Table({data, colOrderSeq, sortCol, displayHeaderMap}) {
 
     useEffect(() => {
         setAllData(data);
-    }, [data])
+    }, [data]);
+
     return (<>
     <Pagination items={allData} callback={setPageData} />
     <div className="table-container">
