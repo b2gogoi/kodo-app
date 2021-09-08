@@ -3,10 +3,9 @@ import Pagination from '../pagination/Pagination';
 import { format } from '../../utils/utils';
 import './Table.css';
 
-export default function Table({data, colOrderSeq, sortCol}) {
+export default function Table({data, colOrderSeq, sortCol, displayHeaderMap}) {
     const [allData, setAllData] = useState(data);
     const [pageData, setPageData] = useState(data);
-
 
     useEffect(() => {
         setAllData(data);
@@ -15,7 +14,9 @@ export default function Table({data, colOrderSeq, sortCol}) {
     <Pagination items={allData} callback={setPageData} />
     <div className="table-container">
         <div className="table-headers-row">
-            {colOrderSeq.map((col, i) => <div key={col} className={sortCol === col ? `sorted column-${col}` : `column-${col}`}>{col.replace(/([A-Z])/g, ' $1')}</div>)}
+            {colOrderSeq.map((col, i) => <div key={col} className={sortCol === col ? `sorted column-${col}` : `column-${col}`}>
+                {displayHeaderMap[col] ? displayHeaderMap[col] : col.replace(/([A-Z])/g, ' $1')}
+            </div>)}
         </div>
         <div className="table-body-container">
             {pageData.map((row, i) => <div key={`${row.name}-${i}`} className="table-row">

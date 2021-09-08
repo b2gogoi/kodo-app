@@ -13,6 +13,10 @@ const columnSequence = ['name', 'dateLastEdited', 'image', 'description'];
 const sortOptions = ['name', 'dateLastEdited'];
 const defaultSort = sortOptions[0];
 
+const displayHeaderMap = {
+  dateLastEdited: 'Last Edited'
+}
+
 export default function Feed() {
     let location = useLocation();
     let history = useHistory();
@@ -76,7 +80,7 @@ export default function Feed() {
         <h1>Feeds</h1>
         <div className="filter-box">
             <SearchBar filter={search} text={searchText} />
-            <SortBy options={sortOptions} selected={sortCol} onSelect={changeSort} />
+            <SortBy options={sortOptions} selected={sortCol} onSelect={changeSort} displayHeaderMap={displayHeaderMap} />
         </div>
         <div className="results-container">
         {filteredFeed.length > 0 && <div className="results-info">{filteredFeed.length} feeds found</div>}
@@ -85,7 +89,7 @@ export default function Feed() {
           </div>
 
           {filteredFeed.length > 0 && <div className="feed-table-container">
-            <Table colOrderSeq={columnSequence} data={filteredFeed} sortCol={sortCol} />
+            <Table colOrderSeq={columnSequence} data={filteredFeed} sortCol={sortCol} displayHeaderMap={displayHeaderMap} />
           </div>}
           {filteredFeed.length === 0 && <div className="message-info">No feeds found for the search conditions</div>}
         </div>
